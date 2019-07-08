@@ -6,10 +6,11 @@ package ChooseYourOwnAdventure;
 use Term::ReadKey;
 use Text::Wrap;
 use Time::HiRes qw/usleep/;
+use Term::ANSIScreen qw/cls/;
 
 use Exporter;
 our @ISA = qw/Exporter/;
-our @EXPORT = qw/Confirm Validate MultipleChoice Narrate/;
+our @EXPORT = qw/Confirm Validate MultipleChoice Narrate ClearScreen/;
 
 sub Confirm {
     my $message = shift;
@@ -50,6 +51,7 @@ sub Validate {
         } else {
             $response = <STDIN>;
             chomp $response;
+            print "\n";
         }
 
         if(!defined $valid_r_hash{lc($response)}) {
@@ -96,3 +98,8 @@ sub MultipleChoice {
     return Validate("Your response:", @valid_responses);
 }
 
+sub ClearScreen {
+    say "hi";
+    my $console = Term::ANSIScreen->new;
+    $console->Cls;      # also works on non-Win32 platform
+}
